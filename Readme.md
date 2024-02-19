@@ -1,1 +1,1 @@
-Labs for IGI and STRWEB 4sem
+Labs for IGI and STRWEB
