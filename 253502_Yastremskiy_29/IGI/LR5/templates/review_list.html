@@ -1,0 +1,30 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Список отзывов</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/review.css' %}">
+</head>
+<body>
+    <h1>Список отзывов</h1>
+    {% if user.is_authenticated %}
+    <a href="{% url 'create_review' %}" class="btn btn-primary-custom">Add Review</a>
+    {% else %}
+    <a href="{% url 'login' %}" class="btn btn-default-custom">Login to Add Review</a>
+    {% endif %}
+    <div class="review-container">
+        {% for review in reviews %}
+        <div class="review-item">
+            <p>{{ review.text }}</p>
+            <p><strong>Пользователь:</strong> {{ review.user.username }}</p>
+            <p><strong>Дата публикации:</strong> {{ review.created_at }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vacancies</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/vacancy.css' %}">
+</head>
+<body>
+    <h1>Список вакансий</h1>
+    <ul>
+            {% for vacancy in vacancies %}
+            <div class="vacancy-container">
+                <div class="vacancy-header">
+                    <h2>{{ vacancy.title }}</h2>
+                    <p>{{ vacancy.created_at }}</p>
+                </div>
+                <div class="vacancy-description">
+                    <p>{{ vacancy.description }}</p>
+                </div>
+                <div class="apply-button">
+                    <button type="button">Откликнуться</button>
+            </div>
+        </div>
+    {% endfor %}
+
+    </ul>
+</body>
+</html>
+
+{% endblock %}

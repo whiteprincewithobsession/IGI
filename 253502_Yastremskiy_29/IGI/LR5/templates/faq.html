@@ -1,0 +1,25 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FAQ</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/faq.css' %}">
+</head>
+<body>
+    <h1>Frequently Asked Questions</h1>
+    <ul>
+        {% for faq in faqs %}
+            <li>
+                <h3>{{ faq.question }}</h3>
+                <p>{{ faq.answer }}</p>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
+
+{% endblock %}

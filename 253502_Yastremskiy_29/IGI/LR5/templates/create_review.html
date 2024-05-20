@@ -1,0 +1,27 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Review</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/create_review.css' %}">
+    <link rel="stylesheet" href="{% static 'css/review_form.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Create Review</h1>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="id_text">Review Text:</label>
+                {{ form.text }}
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</body>
+</html>
+{% endblock %}

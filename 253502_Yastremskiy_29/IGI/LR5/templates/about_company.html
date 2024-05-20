@@ -1,0 +1,63 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>О компании</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/about.css' %}">
+</head>
+<body>
+    <header>
+        <h1>
+        <img width="64px" height="64px" src="{{ company_data.logo.url }}" alt="Логотип">
+        О нашей компании
+    </h1>
+        <h2>{{ company_data.company_name }} </h2>
+    </header>
+    <main>
+        <p>Мастерская по ремонту обуви "{{ company_data.company_name }}" рада приветствовать вас!</p>
+        <p>{{ company_data.history }}
+        <p>Мы - команда профессионалов, занимающихся ремонтом и восстановлением обуви любой сложности. Наша мастерская оснащена современным оборудованием и использует только качественные материалы, чтобы обеспечить долговечность и красоту вашей обуви.</p>
+        <p>У нас вы можете получить услуги по замене подошвы, ремонту каблуков, пошиву и замене деталей обуви, а также обработке и уходу за материалами.</p>
+        <p>Наша цель - не только предоставить вам отличное качество услуг, но и подарить вашей обуви вторую жизнь, чтобы каждый ваш шаг был уверенным и комфортным!</p><br><br>
+        <p>Таймзона: {{ timezone }}</p>
+        <p>Текущая дата (UTC+3): {{ current_date_utc }}</p>
+        <p>Текущее время (UTC+3): {{ current_time_utc }}</p>
+        <h2>Календарь на текущий месяц</h2>
+        <table class="calendar-table">
+            <thead>
+                <tr>
+                    <th>Пн</th>
+                    <th>Вт</th>
+                    <th>Ср</th>
+                    <th>Чт</th>
+                    <th>Пт</th>
+                    <th>Сб</th>
+                    <th>Вс</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for week in calendar %}
+                <tr>
+                    {% for day in week %}
+                    {% if day == 0 %}
+                    <td></td>
+                    {% else %}
+                    <td>{{ day }}</td>
+                    {% endif %}
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+            </main>
+            <footer>
+                <p>&copy; 2024 Мастерская по ремонту обуви "{{ company_data.company_name }}" - официально зарегистрированная компания</p>
+            </footer>
+</body>
+</html>
+{% endblock %}

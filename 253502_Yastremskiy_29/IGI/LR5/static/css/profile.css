@@ -1,0 +1,40 @@
+.order-container {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    padding: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.order-header {
+    background-color: #f0f0f0;
+    padding: 10px;
+    border-radius: 3px;
+    margin-bottom: 10px;
+}
+
+.order-header h2 {
+    margin: 0;
+    font-size: 18px;
+}
+
+.order-details {
+    margin-top: 10px;
+}
+
+.create-order-button {
+    text-align: center;
+}
+
+.create-order-button button {
+    background-color: #337ab7;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.create-order-button button:hover {
+    background-color: #286090;
+}

@@ -1,0 +1,37 @@
+import unittest
+from unittest.mock import patch
+import requests
+
+def get_ip_address2():
+    try:
+        response = requests.get('https://api.ipify.org/?format=json')
+        data = response.json()
+        if response.status_code == 200:
+            return data.get('ip')
+        else:
+            return 'Failed to fetch IP address.'
+    except Exception as e:
+        return 'An error occurred while fetching IP address: ' + str(e)
+
+class TestGetIPAddress(unittest.TestCase):
+    
+    @patch('requests.get')
+    def test_get_ip_address_success(self, mock_get):
+        mock_get.return_value.status_code = 200
+        mock_get.return_value.json.return_value = {'ip': '192.0.2.1'}
+        ip_address = get_ip_address2()
+        self.assertEqual(ip_address, '192.0.2.1')
+
+    @patch('requests.get')
+    def test_get_ip_address_failure(self, mock_get):
+        mock_get.return_value.status_code = 500
+        ip_address = get_ip_address2()
+        self.assertEqual(ip_address, 'Failed to fetch IP address.')
+
+    @patch('requests.get', side_effect=Exception('Test exception'))
+    def test_get_ip_address_exception(self, mock_get):
+        ip_address = get_ip_address2()
+        self.assertEqual(ip_address, 'An error occurred while fetching IP address: Test exception')
+
+if __name__ == '__main__':
+    unittest.main()

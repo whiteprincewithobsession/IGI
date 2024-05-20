@@ -1,0 +1,31 @@
+.contact {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    background-color: #f0f0f0;
+    overflow: hidden;
+    max-width: max-content; 
+}
+
+.contact h2 {
+    margin: 0;
+}
+
+.contact p {
+    margin-top: 10px;
+}
+
+.contact button {
+    background-color: #337ab7;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.contact button:hover {
+    background-color: #286090;
+}

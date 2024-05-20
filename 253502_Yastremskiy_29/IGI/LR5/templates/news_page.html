@@ -1,0 +1,25 @@
+{% extends "base_generic.html" %}
+
+
+{% block content %}
+<title>News Page</title>
+{% load static %}
+    <link rel="stylesheet" href="{% static 'css/news_page.css' %}">
+<div class="container">
+    <h1>Новости</h1>
+    <div class="news-article">
+        {% for article in articles %}
+            <div class="promocode-cell">
+                <h2>{{ article.title }}</h2>
+        <img src="{{ article.image.url }}" alt="{{ article.title }}">
+        <p>{{ article.content }}</p>
+        <p><strong>Дата публикации:</strong> {{ article.date }}</p>
+            </div>
+        {% endfor %}
+        {% comment %} <h2>{{ latest_article.title }}</h2>
+        <img src="{{ latest_article.image.url }}" alt="{{ latest_article.title }}">
+        <p>{{ latest_article.content }}</p>
+        <p><strong>Дата публикации:</strong> {{ latest_article.publication_date }}</p> {% endcomment %}
+    </div>
+</div>
+{% endblock %}

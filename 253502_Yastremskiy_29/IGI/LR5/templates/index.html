@@ -1,0 +1,68 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Index</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+</head>
+<body>
+    <h1>Добро пожаловать на Главную страницу!</h1>
+    {% if total_order_amount %}
+    <p>Общая стоимость заказов со стасусом "Pending": ${{ total_order_amount }}</p>
+    {% endif %}
+    {% if user.is_authenticated %}
+        {% if user.is_client %}
+            <h2>Создать новый заказ</h2>
+            <form method="post">
+                {% csrf_token %}
+                {{ order_form.as_p }}
+                <button type="submit">Создать</button>
+            </form>
+        {% else %}
+            <p>Вы не являетесь клиентом.</p>
+        {% endif %}
+    {% else %}
+        <p>Войдите, прежде чем создать заказ.</p>
+    {% endif %}
+    
+    <form method="get">
+        <label for="sort_by">Отсортировать по:</label>
+        <select name="sort_by" id="sort_by">
+            <option value="price_asc">Цена по возрастанию</option>
+            <option value="price_desc">Цена по убыванию</option>
+        </select>
+        <button type="submit">Сортировать</button>
+    </form>
+
+    {% if user.is_authenticated and user.is_master %}
+        {% if free_orders %}
+            {% for order in free_orders %}
+                <div class="order-item">
+                    ID Заказа: {{ order.id }}<br>
+                    Дата заказа: {{ order.order_date }}<br>
+                    Количество: {{ order.total_amount }}<br>
+                    Статус: {{ order.status }}<br>
+                    Описание: {{ order.description }}<br>
+                    Цена: ${{ order.price }}<br>
+                    Категория: {{ order.category }}<br>
+                    <form method="post" action="{% url 'accept_order' order.id %}">
+                        {% csrf_token %}
+                        <button type="submit">Принять</button>
+                    </form>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>Нет доступных заказов.</p>
+        {% endif %}
+    {% else %}
+        <p>Вы не вошли в качестве мастера.</p>
+    {% endif %}
+    
+</body>
+</html>
+
+{% endblock %}

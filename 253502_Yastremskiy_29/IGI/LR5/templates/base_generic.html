@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block title %}<title>Workshop</title>{% endblock %}
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+    
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f0f0f0;
+        }
+
+        .navbar-default {
+            background-color: #ffffff; 
+            border-color: #e7e7e7; 
+        }
+
+        .navbar-default .navbar-brand {
+            color: #333333;
+        }
+
+        .navbar-default .navbar-nav > li > a {
+            color: #333333; 
+        }
+
+        .navbar-default .navbar-nav > li > a:hover,
+        .navbar-default .navbar-nav > li > a:focus {
+            color: #ffffff; 
+            background-color: #337ab7; 
+        }
+
+        .navbar-default .navbar-nav > .active > a,
+        .navbar-default .navbar-nav > .active > a:hover,
+        .navbar-default .navbar-nav > .active > a:focus {
+            color: #ffffff; 
+            background-color: #337ab7;
+        }
+        
+    </style>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">Мастерская</a>
+                </div>
+                <div class="collapse navbar-collapse" id="myNavbar">
+                    <ul class="nav navbar-nav">
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        {% if user.is_authenticated %}
+                            <p>Здравствуйте, {{ user.username }}</p>
+                            <li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-log-out"></span> Выйти</a></li>
+                        {% else %}
+                            <li><a href="{% url 'login' %}"><span class="glyphicon glyphicon-log-in"></span> Вход</a></li>
+                            <li><a href="{% url 'register' %}"><span class="glyphicon glyphicon-user"></span> Регистрация</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <div class="row">
+            <div class="col-sm-2">
+                {% block sidebar %}
+                    <ul class="sidebar-nav">
+                      <li><a href="{% url 'index' %}">Главная</a></li>
+                      <li><a href="{% url 'profile' %}">Профиль</a></li>
+                      <li><a href="{% url 'vacancy_list' %}">Вакансии</a></li>
+                      <li><a href="{% url 'news_page' %}">Новости</a></li>
+                      <li><a href="{% url 'promocodes' %}">Промокоды & купоны</a></li>
+                      <li><a href="{% url 'faq' %}">FAQ</a></li>
+                      <li><a href="{% url 'contacts' %}">Контакты</a></li>
+                      <li><a href="{% url 'review_list' %}">Отзывы</a></li>
+                      <li><a href="{% url 'about_company' %}">О компании</a></li>
+                      <li><a href="{% url 'privacy_policy' %}">Политика конфиденциальности</a></li>
+                      {% if user.is_authenticated and user.is_master and user.is_client %}
+                      <li><a href="{% url 'order_status_pie_chart' %}">Статистика по заказам</a></li>
+                      {% endif %}
+                    </ul>
+                {% endblock %}
+            </div>
+            <div class="col-sm-10">
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>

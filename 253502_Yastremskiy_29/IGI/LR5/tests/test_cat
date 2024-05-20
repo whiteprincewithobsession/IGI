@@ -1,0 +1,38 @@
+import requests
+import unittest
+from unittest.mock import patch
+
+def get_random_cat_fact():
+    try:
+        response = requests.get('https://catfact.ninja/fact')
+        data = response.json()
+        if response.status_code == 200:
+            return data.get('fact')
+        else:
+            return 'Failed to fetch cat fact.'
+    except Exception as e:
+        return 'An error occurred while fetching cat fact: ' + str(e)
+    
+
+class TestGetRandomCatFact(unittest.TestCase):
+    
+    @patch('requests.get')
+    def test_get_random_cat_fact_success(self, mock_get):
+        mock_get.return_value.status_code = 200
+        mock_get.return_value.json.return_value = {'fact': 'Cats sleep for an average of 13 to 14 hours a day.'}
+        cat_fact = get_random_cat_fact()
+        self.assertEqual(cat_fact, 'Cats sleep for an average of 13 to 14 hours a day.')
+
+    @patch('requests.get')
+    def test_get_random_cat_fact_failure(self, mock_get):
+        mock_get.return_value.status_code = 500
+        cat_fact = get_random_cat_fact()
+        self.assertEqual(cat_fact, 'Failed to fetch cat fact.')
+
+    @patch('requests.get', side_effect=Exception('Test exception'))
+    def test_get_random_cat_fact_exception(self, mock_get):
+        cat_fact = get_random_cat_fact()
+        self.assertEqual(cat_fact, 'An error occurred while fetching cat fact: Test exception')
+
+if __name__ == '__main__':
+    unittest.main()

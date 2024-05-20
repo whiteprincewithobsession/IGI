@@ -1,0 +1,27 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Contacts</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/contacts.css' %}" />
+</head>
+<body>
+    <div class="container">
+        <h1>Сотрудники (мастера)</h1>
+        <ul>
+            {% for master in masters %}
+                <li class="contact">
+                    {{ master.username }}<br>
+                    Phone: {{ master.phone_number }}<br>
+                    Email: {{ master.email }}
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
+{% endblock %}
